@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import styled from "styled-components";
 import useStopwatch, { STATUS } from "../hooks/useStopwatch";
 import { stopwatchTime } from "../utils/stopwatch/constants";
@@ -31,9 +31,21 @@ const Button = styled.button`
 
   color: white;
 `;
+const LapsLayer = styled.div`
+  padding: 40px 0;
+  width: 100%;
+`;
+const LapItem = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+`;
+const LapText = styled.span``;
 
 const StopwatchRecorder = () => {
-  const { seconds, status, start, stop, reset } = useStopwatch({ realTimeCheckMode: true });
+  const { seconds, status, start, stop, reset, nextLap, laps, record } = useStopwatch({ realTimeCheckMode: true });
 
   const onClickStart = useCallback(() => {
     if (status === STATUS.STOP) {
@@ -44,16 +56,33 @@ const StopwatchRecorder = () => {
   }, [status, seconds, start, stop]);
 
   const onClickLap = useCallback(() => {
-    return reset();
+    if (seconds !== 0 && status === STATUS.STOP) {
+      return reset();
+    }
+    return record();
   }, [status, seconds, start, reset]);
+
+  const disabledLabButton = useMemo(() => {
+    return status === STATUS.STOP && seconds === 0;
+  }, [status, seconds]);
 
   return (
     <Wrapper>
       <Recorder>{stopwatchTime(seconds)}</Recorder>
       <ButtonLayer>
-        <Button onClick={onClickLap}>{"재설정"}</Button>
+        <Button onClick={onClickLap} disabled={disabledLabButton}>
+          {seconds !== 0 && status === STATUS.STOP ? "재설정" : "랩"}
+        </Button>
         <Button onClick={onClickStart}>{status === STATUS.STOP ? "시작" : "중단"}</Button>
       </ButtonLayer>
+      <LapsLayer>
+        {laps.map((lap, index) => (
+          <LapItem key={index}>
+            <LapText>{`${lap.label} ${lap.id}`}</LapText>
+            <LapText>{stopwatchTime(lap.lapTime)}</LapText>
+          </LapItem>
+        ))}
+      </LapsLayer>
     </Wrapper>
   );
 };

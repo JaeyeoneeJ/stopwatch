@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { INTERVAL, MILLISEC_PER_SECOND } from "../utils/stopwatch/constants";
 
 export const STATUS = {
@@ -9,9 +9,19 @@ export const STATUS = {
 const useStopwatch = ({ currentDate = null, realTimeCheckMode = false } = {}) => {
   const [seconds, setSeconds] = useState(currentDate ? Math.floor((new Date() - currentDate) / 1000) : 0);
   const [status, setStatus] = useState(STATUS.STOP);
+  const [laps, setLaps] = useState([]);
 
   const currentTimeRef = useRef(null);
   const durationTimeRef = useRef(null);
+
+  const nextLap = useMemo(() => {
+    return {
+      id: laps.length + 1,
+      label: "랩",
+      lapTime: seconds - (laps[0]?.seconds ?? 0),
+      seconds,
+    };
+  }, [seconds, laps]);
 
   const start = useCallback(() => {
     if (status !== STATUS.STOP) {
@@ -40,8 +50,17 @@ const useStopwatch = ({ currentDate = null, realTimeCheckMode = false } = {}) =>
     }
 
     setSeconds(0);
+    setLaps([]);
     clearInterval(intervalRef.current); // 리셋 시 불필요한 setInterval이 돌지 않도록 적용
   }, [status]);
+
+  const record = useCallback(() => {
+    if (status !== STATUS.PROCESSING) {
+      return;
+    }
+
+    setLaps((prev) => [...prev, nextLap]); // 배열을 단순히 추가만 하면 안됨. 의존성은 주소를 참조하고 있어서 안 바뀜
+  }, [status, nextLap]);
 
   useEffect(() => {
     if (currentDate) {
@@ -77,9 +96,12 @@ const useStopwatch = ({ currentDate = null, realTimeCheckMode = false } = {}) =>
   return {
     seconds,
     status,
+    laps,
     start,
     stop,
     reset,
+    record,
+    nextLap,
   };
 };
 
