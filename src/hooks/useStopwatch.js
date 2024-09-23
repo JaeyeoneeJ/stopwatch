@@ -18,7 +18,7 @@ const useStopwatch = ({ currentDate = null, realTimeCheckMode = false } = {}) =>
     return {
       id: laps.length + 1,
       label: "랩",
-      lapTime: seconds - (laps[0]?.seconds ?? 0),
+      lapTime: seconds - (laps[laps.length - 1]?.seconds ?? 0),
       seconds,
     };
   }, [seconds, laps]);
