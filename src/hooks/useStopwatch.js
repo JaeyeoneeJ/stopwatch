@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { INTERVAL, MILLISEC_PER_SECOND } from "../utils/stopwatch/constants";
 
-const STATUS = {
+export const STATUS = {
   PROCESSING: "processing",
   STOP: "stop",
 };
@@ -36,6 +36,7 @@ const useStopwatch = ({ currentDate = null, realTimeCheckMode = false } = {}) =>
   const reset = useCallback(() => {
     // todo: 이미 상태가 정지이여야만 리셋 가능
     if (status !== STATUS.STOP) {
+      setStatus(STATUS.STOP);
     }
 
     setSeconds(0);
