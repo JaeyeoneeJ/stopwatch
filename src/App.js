@@ -10,7 +10,7 @@ const Body = styled.div`
 
 const Wrapper = styled.div`
   max-width: 400px;
-  height: 100%;
+  height: calc(100% - 40px);
   margin: 0 auto;
   background-color: black;
   color: white;
