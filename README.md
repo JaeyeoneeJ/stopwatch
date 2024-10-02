@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+# stopwatch
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 0. 개요
 
-## Available Scripts
+- 이 프로젝트는 React App에서 Stopwatch를 라이브러리 없이 구현하고 앱에 부하가 걸려 성능이 나빠져 setInterval 등의 시간이 정상적으로 측정되지 않았을 때, 실제 시간을 적용하는 방법을 연구하기 위해 제작되었습니다.
+- 해당 프로젝트에 대한 상세 정보는 아래 문서를 확인 바랍니다.
+  - [stopwatch 구현](https://github.com/JaeyeoneeJ/TIL/blob/main/react/stopwatch_%EA%B5%AC%ED%98%84.md)
+- 프로젝트 결과 예시
 
-In the project directory, you can run:
+  <img src="https://github.com/user-attachments/assets/3b30d5d6-f488-427c-a77c-be741b1196da" alt="stopwatch" />
 
-### `npm start`
+## 1. 개발 환경
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+이 프로젝트는 다음과 같은 환경에서 개발되었습니다.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- npm: 6.14.7
+- node: v16.17.0
+- dependencies
 
-### `npm test`
+  - "react": "^18.2.0",
+  - "react-dom": "^18.2.0",
+  - "react-scripts": "5.0.1"
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 이 프로젝트의 구조는 다음과 같습니다.
 
-### `npm run build`
+```
+├── package-lock.json
+├── package.json
+├── public
+│   └── index.html
+└── src
+    ├── App.js
+    ├── components
+    │   └── Stopwatch
+    │       └── Stopwatch.jsx
+    ├── features
+    │   ├── StopwatchRecorder.jsx
+    │   └── StopwatchTest.jsx
+    ├── hooks
+    │   └── useStopwatch.js
+    ├── index.css
+    ├── index.js
+    ├── logo.svg
+    ├── reportWebVitals.js
+    ├── setupTests.js
+    └── utils
+        └── stopwatch
+            └── constants.js
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 2. 프로젝트 실행
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1) `npm start` || `npm run start`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- 위 명령어를 통해 개발 모드의 앱을 실행할 수 있으며, [http://localhost:3000](http://localhost:3000)의 기본 포트의 브라우저에서 확인할 수 있습니다.
 
-### `npm run eject`
+### 2) `npm run build`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- 위 명령어를 통해 개발 모드의 앱을 빌드할 수 있습니다.
+- 만일 당신의 글로벌 환경에 http-server가 설치되어 있는 경우, 빌드 후, `npx http-server ./build`로 빌드된 앱을 확인할 수 있습니다.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 3. 프로젝트 확인
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 버튼을 눌러 stopwatch의 기능을 실행할 수 있습니다.
